@@ -3,7 +3,7 @@
 :set ruler
 
 ":set ic
-":set autoindent
+:set autoindent
 ":set smartindent
 :set expandtab
 :set softtabstop=4
