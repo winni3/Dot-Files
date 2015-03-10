@@ -1,5 +1,7 @@
 alias top='htop'
 
+#PS1='[\t][\u@\h \w]\$'
+
 # Reset
 Color_Off='\e[0m'       # Text Reset
 
@@ -73,9 +75,20 @@ On_IPurple='\e[0;105m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
 On_IWhite='\e[0;107m'   # White
 
-#PS1='[\t][\u@\h \w]\$'
-PS1="\[$Green\]\t\[$Red\]-\[$Blue\]\u\[$Yellow\]\[$Yellow\]\w\[\033[m\]\[$Purple\]\$(__git_ps1)\[$White\]\$ "
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+#export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\]$(parse_git_branch)$ '
+#export PS1='\[\033[00;32m\]\u\[\033[01m\]@\[\033[00;36m\]\h\[\033[01m\] \! \[\033[00;35m\]\w\[\033[00m\]\[\033[01;30m\]$(parse_git_branch)\[\033[00m\]\$ '
+
+PS1="\[$Green\]\t\[$Red\]-\[$Blue\]\u\[$Yellow\]\[$Yellow\]\w\[\033[m\]\[$Purple\] \$(parse_git_branch)\[$White\]\$ "
 export PS1
+
+
+
 
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home
@@ -110,6 +123,7 @@ export PHP_PEAR_PHP_BIN
 
 alias zf='/usr/local/zend/share/ZendFramework/bin/zf.sh'
 export CLICOLOR=1
+#PS1='[\t][\u@\h \w]\$'
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
 echo -n -e "\033]0;`hostname`\007"
