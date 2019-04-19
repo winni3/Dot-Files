@@ -1,7 +1,5 @@
 alias top='htop'
 
-#PS1='[\t][\u@\h \w]\$'
-
 # Reset
 Color_Off='\e[0m'       # Text Reset
 
@@ -81,23 +79,21 @@ function parse_git_dirty {
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
-#export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\]$(parse_git_branch)$ '
-#export PS1='\[\033[00;32m\]\u\[\033[01m\]@\[\033[00;36m\]\h\[\033[01m\] \! \[\033[00;35m\]\w\[\033[00m\]\[\033[01;30m\]$(parse_git_branch)\[\033[00m\]\$ '
 
+#PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\]$(parse_git_branch)$ '
+#PS1='\[\033[00;32m\]\u\[\033[01m\]@\[\033[00;36m\]\h\[\033[01m\] \! \[\033[00;35m\]\w\[\033[00m\]\[\033[01;30m\]$(parse_git_branch)\[\033[00m\]\$ '
+#PS1='[\t][\u@\h \w]\$'
 PS1="\[$Green\]\t\[$Red\]-\[$Blue\]\u\[$Yellow\]\[$Yellow\]\w\[\033[m\]\[$Purple\] \$(parse_git_branch)\[$White\]\$ "
 export PS1
-
-
-
 
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home
 export TOMCAT_HOME=/usr/local/apache-tomcat-8.0.20
+export GOPATH=$HOME/go
 
-export ANT_HOME=/usr/share/ant
 export EDITOR=vim
 
-. ~/.git-prompt.sh
+#. ~/.git-prompt.sh
 
 alias vi='vim'
 
@@ -105,25 +101,10 @@ export HISTTIMEFORMAT='%F %T '
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
 
-M2_HOME='/usr/local/apache-maven-3.2.5'
-export M2_HOME
-export M2_SETTINGS_XML='/Users/wongw267/.m2/settings.xml'
-
-MAVEN_OPTS='-Xms256m -Xmx1024m -XX:MaxPermSize=512m'
-export MAVEN_OPTS
-
-export GROOVY_HOME=/opt/local/bin
-export GRAILS_HOME=/opt/local/share/java/grails
-
-PATH="/usr/local/apache-jmeter-2.12/bin:$TOMCAT_HOME/bin:/usr/local/git/bin:$JAVA_HOME/bin:/usr/libexec:$M2_HOME/bin:/opt/chef/bin:/opt/chef/embedded/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/zend/bin:$GRAILS_HOME/bin:$PATH:/Users/wongw267/workspace/atlassian-plugin-sdk-3.9.2/bin"
+PATH="$TOMCAT_HOME/bin:$JAVA_HOME/bin:/usr/libexec:$PATH:$(go env GOPATH)/bin"
 export PATH
 
-PHP_PEAR_PHP_BIN=/usr/bin/php
-export PHP_PEAR_PHP_BIN
-
-alias zf='/usr/local/zend/share/ZendFramework/bin/zf.sh'
 export CLICOLOR=1
-#PS1='[\t][\u@\h \w]\$'
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
 echo -n -e "\033]0;`hostname`\007"
